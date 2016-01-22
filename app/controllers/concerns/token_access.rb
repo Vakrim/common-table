@@ -20,8 +20,8 @@ module TokenAccess
 
     before_action check_token, options.slice(:only, :except)
 
-    define_method :set_token! do
-      record = send(options[:resource])
+    define_method :set_token! do |record = nil|
+      record ||= send(options[:resource])
       cookies.permanent[:user_token] ||= SecureRandom.base58(24)
       cookies.permanent["#{record.class.name}_#{record.id}_token"] = Digest::SHA1.hexdigest("#{record.public_send(options[:token_method])} #{cookies[:user_token]}")
     end
