@@ -15,7 +15,7 @@ class RoomsController < ApplicationController
   def access
     @room = Room.find(params[:id])
     return redirect_to room_path(@room) if has_cookie_token?(@room)
-    return redirect_to rooms_path, alert: 'Password is wrong' if  @room.private_access? && !@room.authenticate(params[:room][:password])
+    return redirect_to rooms_path, alert: 'Password is wrong!' if  @room.private_access? && !@room.authenticate(params[:room][:password])
     set_token!
     redirect_to room_path(@room)
   end

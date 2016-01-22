@@ -4,7 +4,7 @@ module TokenAccess
     options.reverse_merge!(
       resource: nil,
       redirect_path: :root_path,
-      alert: 'Password is wrong',
+      alert: 'Your token is wrong!',
       token_method: :token
     )
 
