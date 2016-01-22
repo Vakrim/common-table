@@ -1,0 +1,26 @@
+.container
+  .row
+    .col-lg-9.col-lg-offset-1
+      h1 Rooms
+      - @rooms.each do |room|
+        .col-lg-3
+          .panel.panel-default.room-card
+            .panel-body
+              = form_for(room, url: access_room_path(room), method: :post) do |f|
+                .form-group.room-card-title= room.name
+                .form-group
+                  - if room.private_access?
+                    - if has_room_token? room
+                      .room-card-title Authorized
+                    - else
+                      = f.password_field :password, placeholder: 'Password', class: 'form-control'
+                  - elsif room.public_access?
+                    .room-card-title Public
+                .form-group= f.submit 'Enter', class: 'btn btn-primary'
+      .col-lg-3
+        .panel.panel-default.room-card
+          .panel-body
+            = form_for(@new_room) do |f|
+              .form-group= f.text_field :name, placeholder: 'New room name', class: 'form-control'
+              .form-group= f.password_field :password, placeholder: 'Password', class: 'form-control'
+              .form-group= f.submit 'Create new room', class: 'btn btn-success'
