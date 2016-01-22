@@ -1,4 +1,7 @@
 class RoomsController < ApplicationController
+  extend TokenAccess
+  authenticate_token! only: [:show], redirect_path: :rooms_path, resource: :find_room
+  helper TokenAccess::Helper
 
   def index
     @rooms = Room.order(created_at: :desc)
@@ -7,15 +10,13 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
-    redirect_to rooms_path, alert: 'Password is wrong' if @room.private_access? && cookies["room_token_#{@room.id}"] != Digest::SHA1.hexdigest("#{@room.token} #{cookies[:user_room_token]}")
   end
 
   def access
     @room = Room.find(params[:id])
-    return redirect_to room_path(@room) if @room.public_access? || cookies["room_token_#{@room.id}"].present?
-    return redirect_to rooms_path, alert: 'Password is wrong' unless @room.authenticate(params[:room][:password])
-    cookies.permanent[:user_room_token] ||= SecureRandom.base58(24)
-    cookies.permanent["room_token_#{@room.id}"] = Digest::SHA1.hexdigest("#{@room.token} #{cookies[:user_room_token]}")
+    return redirect_to room_path(@room) if has_cookie_token?(@room)
+    return redirect_to rooms_path, alert: 'Password is wrong' if  @room.private_access? && !@room.authenticate(params[:room][:password])
+    set_token!
     redirect_to room_path(@room)
   end
 
@@ -31,6 +32,10 @@ class RoomsController < ApplicationController
   end
 
   private
+
+  def find_room
+    Room.find(params[:id])
+  end
 
   def room_params
     params.require(:room).permit(:name, :password)

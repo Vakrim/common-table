@@ -10,7 +10,7 @@
                 .form-group.room-card-title= room.name
                 .form-group
                   - if room.private_access?
-                    - if has_room_token? room
+                    - if has_cookie_token? room
                       .room-card-title Authorized
                     - else
                       = f.password_field :password, placeholder: 'Password', class: 'form-control'
