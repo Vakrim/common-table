@@ -6,6 +6,7 @@ class @Table
 
     $ =>
       @initDragable()
+      @initMenu()
 
     @subscription = App.table = App.cable.subscriptions.create { channel: "TableChannel", room_token: roomToken },
       connected: ->
@@ -37,3 +38,6 @@ class @Table
           left: $(@).css('left')
           top: $(@).css('top')
           seed: self.seed
+
+  initMenu: ->
+    $('.room-ui-menu').slinky()

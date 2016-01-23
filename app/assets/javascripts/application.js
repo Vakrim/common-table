@@ -3,5 +3,8 @@
 //= require jquery-ui
 //= require turbolinks
 //= require bootstrap-sprockets
+
 //= require cable
 //= require_tree ./channels
+
+//= require jquery.slinky

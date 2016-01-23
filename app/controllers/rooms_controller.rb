@@ -10,6 +10,7 @@ class RoomsController < ApplicationController
 
   def show
     @room = find_room
+    @template_categories = TableItemTemplateStorage.instance.categories
   end
 
   def access

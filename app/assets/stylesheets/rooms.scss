@@ -9,3 +9,21 @@
     width: 100%;
   }
 }
+
+.room-status-ui {
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  .room-ui-title {
+    padding: 10px;
+    margin: 0;
+  }
+}
+
+.room-ui-menu {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 300px;
+}

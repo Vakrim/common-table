@@ -1,7 +1,14 @@
 .container
   .row
     .col-lg-9.col-lg-offset-1
-      h1 Rooms
+      .jumbotron
+        h1 Rooms
+        p Feel free to join one of exisits rooms or create new one!
+        p
+         span> Made with
+         span.glyphicon.glyphicon-heart
+         span<> by
+         = link_to 'Binar::Apps', 'https://binarapps.com/'
       - @rooms.each do |room|
         .col-lg-3
           .panel.panel-default.room-card
@@ -11,11 +18,15 @@
                 .form-group
                   - if room.private_access?
                     - if has_cookie_token? room
-                      .room-card-title Authorized
+                      .room-card-title
+                        .glyphicon.glyphicon-user>
+                        | Authorized
                     - else
                       = f.password_field :password, placeholder: 'Password', class: 'form-control'
                   - elsif room.public_access?
-                    .room-card-title Public
+                    .room-card-title
+                      .glyphicon.glyphicon-globe>
+                      | Public
                 .form-group= f.submit 'Enter', class: 'btn btn-primary'
       .col-lg-3
         .panel.panel-default.room-card

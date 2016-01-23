@@ -1,5 +1,22 @@
 - 5.times do |n|
   .dragable-box[ data-drag-id=n style="border: 1px solid #000; width: 100px; height: 100px; position: absolute; top: 100px; left: 100px; background: rgba(255, 255, 255, 0.9);" ]
 
+.room-status-ui
+  h1.room-ui-title= @room.name
+
+.room-ui-menu.slinky-menu
+  ul
+    li
+      a[href="#"] Add object
+      ul
+        - @template_categories.each do |category|
+          li
+            a[href="#"]= category[:name]
+            ul
+              - category[:templates].each do |template|
+                a[href="#"]= template.name
+
+
+
 javascript:
   var table = new Table('#{ j @room.token }');
