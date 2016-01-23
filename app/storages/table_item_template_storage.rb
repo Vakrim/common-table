@@ -1,6 +1,6 @@
 class TableItemTemplateStorage
   include Singleton
-  STORAGE_PATH = Rails.root.join('db', 'storages', 'table_item_template')
+  STORAGE_PATH = Rails.root.join('db', 'storages', 'table_item_templates')
   CATEGORIES_PATH = STORAGE_PATH.join('categories.yml')
 
   def initialize
