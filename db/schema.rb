@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160122121053) do
+ActiveRecord::Schema.define(version: 20160123143948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,19 @@ ActiveRecord::Schema.define(version: 20160122121053) do
     t.integer  "access",          default: 0, null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+  end
+
+  create_table "table_items", force: :cascade do |t|
+    t.integer  "room_id"
+    t.string   "image_path"
+    t.float    "pos_x"
+    t.float    "pos_y"
+    t.float    "width"
+    t.float    "height"
+    t.integer  "pos_z"
+    t.text     "other_properties"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
 end

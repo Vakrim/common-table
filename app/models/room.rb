@@ -3,6 +3,8 @@ class Room < ApplicationRecord
   has_secure_password validations: false
   has_secure_token
 
+  has_many :table_items
+
   validates :name, presence: true
 
   before_save :set_access

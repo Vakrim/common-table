@@ -1,0 +1,11 @@
+.room-ui-menu.slinky-menu
+  ul
+    li
+      a[href="#"] Add object
+      ul
+        - template_categories.each do |category|
+          li
+            a[href="#"]= category[:name]
+            ul
+              - category[:templates].each do |template|
+                a.template-example[href="#" data-template-id=template.id style="background-image: url(#{image_path template.image_path});"]

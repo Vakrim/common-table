@@ -17,31 +17,32 @@ class @Table
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        if data.action == 'move' && data.seed != self.seed
-          $("[data-drag-id=#{data.dragId}]").css
-            opacity: 0.5
-          .animate
-            left: data.left
-            top: data.top
-            opacity: 1
-          , 300
+        if this["received_#{data.action}"]
+          this["received_#{data.action}"].call(this, data)
 
-      move: (data) ->
-        @perform 'move', data
+      received_update: (data) ->
+        return if data.seed == self.seed
+        $("[data-table-item-id=#{data.tableItemId}]").css
+          opacity: 0.5
+        .animate
+          left: data.left
+          top: data.top
+          opacity: 1
+        , 300
+
+      received_create: (data) ->
+        $newObject = $(data.html)
+        self._initDraggableItem $newObject
+        $('.room-table').append($newObject)
+
+      update: (data) ->
+        @perform 'update', data
 
       create: (data) ->
         @perform 'create', data
 
   initDragable: ->
-    self = @
-
-    $('.dragable-box').draggable
-      stop: (e) ->
-        self.subscription.move
-          dragId: $(@).data('dragId')
-          left: $(@).css('left')
-          top: $(@).css('top')
-          seed: self.seed
+    @_initDraggableItem $('.table-item')
 
   initMenu: ->
     $('.room-ui-menu').slinky()
@@ -51,3 +52,14 @@ class @Table
 
     $('.room-ui-menu').on 'click', '.template-example', ->
       self.subscription.create({ template_id: $(@).data('templateId') })
+
+  _initDraggableItem: ($obj) ->
+    self = @
+
+    $obj.draggable
+      stop: (e) ->
+        self.subscription.update
+          tableItemId: $(@).data('tableItemId')
+          left: $(@).css('left')
+          top: $(@).css('top')
+          seed: self.seed
