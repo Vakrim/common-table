@@ -1,45 +1,49 @@
--
-  name: Black Bishop
-  width: 133
-  height: 143
+---
+- name: Black Bishop
   image: b_bishop
--
-  name: Black Castle
-  width: 105
-  height: 121
-  image: b_castle
--
-  name: Black King
-  image: b_king
--
-  name: Black Knight
-  image: b_knight
--
-  name: Black Pawn
-  image: b_pawn
--
-  name: Black Queen
-  image: b_queen
-
--
-  name: White Bishop
   width: 133
   height: 143
-  image: w_bishop
--
-  name: White Castle
+- name: Black Castle
+  image: b_castle
   width: 105
   height: 121
+- name: Black King
+  image: b_king
+  width: 141
+  height: 152
+- name: Black Knight
+  image: b_knight
+  width: 124
+  height: 122
+- name: Black Pawn
+  image: b_pawn
+  width: 91
+  height: 122
+- name: Black Queen
+  image: b_queen
+  width: 142
+  height: 133
+- name: White Bishop
+  image: w_bishop
+  width: 133
+  height: 142
+- name: White Castle
   image: w_castle
--
-  name: White King
+  width: 105
+  height: 122
+- name: White King
   image: w_king
--
-  name: White Knight
+  width: 141
+  height: 152
+- name: White Knight
   image: w_knight
--
-  name: White Pawn
+  width: 124
+  height: 122
+- name: White Pawn
   image: w_pawn
--
-  name: White Queen
+  width: 91
+  height: 122
+- name: White Queen
   image: w_queen
+  width: 142
+  height: 133
