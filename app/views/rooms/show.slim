@@ -14,9 +14,7 @@
             a[href="#"]= category[:name]
             ul
               - category[:templates].each do |template|
-                a[href="#"]= template.name
-
-
+                a.template-example[href="#" data-template-id=template.id style="background-image: url(#{image_path template.image_path});"]
 
 javascript:
   var table = new Table('#{ j @room.token }');

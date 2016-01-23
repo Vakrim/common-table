@@ -12,4 +12,8 @@ class TableChannel < ApplicationCable::Channel
   def move(data)
     ActionCable.server.broadcast "table_#{params[:room_token]}", data
   end
+
+  def create(data)
+    puts(data)
+  end
 end
