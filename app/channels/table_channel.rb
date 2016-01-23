@@ -13,7 +13,10 @@ class TableChannel < ApplicationCable::Channel
   end
 
   def update(data)
-    ActionCable.server.broadcast "table_#{params[:room_token]}", data
+    table_item = TableItem.find(data['table_item_id'])
+    table_item.update_from_css(data['style'])
+    broadcast_msg = { action: data['action'], table_item_id: table_item.id, style: style_hash_for_table_item(table_item) }
+    ActionCable.server.broadcast "table_#{params[:room_token]}", broadcast_msg
   end
 
   def create(data)
@@ -21,7 +24,7 @@ class TableChannel < ApplicationCable::Channel
     room = Room.find_by_token params[:room_token]
     table_item = TableItem.create_from_template!(template, room)
 
-    html = render_table_item(table_item)
-    ActionCable.server.broadcast "table_#{params[:room_token]}", { action: data['action'], html: html }
+    broadcast_msg = { action: data['action'], html: render_table_item(table_item) }
+    ActionCable.server.broadcast "table_#{params[:room_token]}", broadcast_msg
   end
 end

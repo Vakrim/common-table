@@ -2,8 +2,6 @@ class @Table
   constructor: (roomToken) ->
     self = @
 
-    @seed = Math.floor((Math.random() * 1000000));
-
     $ =>
       @initDragable()
       @initMenu()
@@ -21,14 +19,8 @@ class @Table
           this["received_#{data.action}"].call(this, data)
 
       received_update: (data) ->
-        return if data.seed == self.seed
-        $("[data-table-item-id=#{data.tableItemId}]").css
-          opacity: 0.5
-        .animate
-          left: data.left
-          top: data.top
-          opacity: 1
-        , 300
+        console.log data
+        $("[data-table-item-id=#{data.table_item_id}]").animate data.style, 300
 
       received_create: (data) ->
         $newObject = $(data.html)
@@ -59,7 +51,5 @@ class @Table
     $obj.draggable
       stop: (e) ->
         self.subscription.update
-          tableItemId: $(@).data('tableItemId')
-          left: $(@).css('left')
-          top: $(@).css('top')
-          seed: self.seed
+          table_item_id: $(@).data('tableItemId')
+          style: $(@).attr('style')
