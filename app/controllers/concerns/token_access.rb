@@ -12,7 +12,7 @@ module TokenAccess
 
     check_token = -> {
       record = send(options[:resource])
-      if cookies["#{record.class.name}_#{record.id}_token"] != Digest::SHA1.hexdigest("#{record.public_send(options[:token_method])} #{cookies[:user_token]}")
+      if cookies["#{record.class.name}_#{record.id}_token"] != record.public_send(options[:token_method])
         cookies.delete "#{record.class.name}_#{record.id}_token"
         redirect_to send(options[:redirect_path]), alert: options[:alert]
       end
@@ -23,7 +23,7 @@ module TokenAccess
     define_method :set_token! do |record = nil|
       record ||= send(options[:resource])
       cookies.permanent[:user_token] ||= SecureRandom.base58(24)
-      cookies.permanent["#{record.class.name}_#{record.id}_token"] = Digest::SHA1.hexdigest("#{record.public_send(options[:token_method])} #{cookies[:user_token]}")
+      cookies.permanent["#{record.class.name}_#{record.id}_token"] = record.public_send(options[:token_method])
     end
 
     include TokenAccess::Helper
