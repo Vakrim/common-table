@@ -42,11 +42,13 @@ set :bundle_binstubs, nil
 set :linked_dirs, ['log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system']
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets public/assets}
 set :assets_roles, [:web, :app]
+set :passenger_restart_with_touch, true
+
 
 namespace :deploy do
   after :published, :symlink_to_public_ruby do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
-      execute "rm #{fetch(:deploy_to)}/public_ruby"
+      execute "rm -rf #{fetch(:deploy_to)}/public_ruby"
       execute "ln -s #{fetch(:release_path)} #{fetch(:deploy_to)}/public_ruby"
     end
   end
