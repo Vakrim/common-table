@@ -42,6 +42,8 @@ group :development do
   gem 'web-console', '~> 3.0'
   # Use Capistrano for deployment
   gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-passenger'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,8 +1,11 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'common-table'
+set :repo_url, 'git@github.com:Vakrim/common-table.git'
+
+set :rvm_type, :user
+set :rvm_ruby_version, '2.2.2@common-table'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -24,6 +27,7 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', '.env')
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -34,15 +38,16 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-namespace :deploy do
+set :bundle_binstubs, nil
+set :linked_dirs, ['log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system']
+set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets public/assets}
+set :assets_roles, [:web, :app]
 
-  after :restart, :clear_cache do
+namespace :deploy do
+  after :published, :symlink_to_public_ruby do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+      execute "rm #{fetch(:deploy_to)}/public_ruby"
+      execute "ln -s #{fetch(:release_path)} #{fetch(:deploy_to)}/public_ruby"
     end
   end
-
 end
