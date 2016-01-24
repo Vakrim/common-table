@@ -31,6 +31,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '>= 3.2'
 
 gem 'slim', '~> 3.0', '>= 3.0.6'
+gem 'dotenv'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
