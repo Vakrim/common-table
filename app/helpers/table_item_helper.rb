@@ -2,7 +2,9 @@ module TableItemHelper
 
   def render_table_item(item)
     style = style_for_table_item item
-    image_tag item.image_path, style: style, class: 'table-item', 'data-table-item-id' => item.id
+    content_tag :div, style: style, class: 'table-item', 'data-table-item-id' => item.id do
+      image_tag item.image_path, style: style
+    end
   end
 
   def style_hash_for_table_item(item)

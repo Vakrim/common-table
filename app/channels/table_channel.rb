@@ -2,6 +2,8 @@
 class TableChannel < ApplicationCable::Channel
   include TableItemHelper
   include ActionView::Helpers::AssetTagHelper
+  include ActionView::Helpers::TagHelper
+  include ActionView::Context
 
   def subscribed
     room = Room.find_by_token params[:room_token]
