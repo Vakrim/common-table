@@ -7,6 +7,7 @@ set :repo_url, 'git@github.com:Vakrim/common-table.git'
 set :rvm_type, :user
 set :rvm_ruby_version, '2.2.2@common-table'
 
+set :branch, :deploy
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
